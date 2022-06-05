@@ -47,9 +47,38 @@
             <artifactId>hutool-all</artifactId>
             <version>5.7.16</version>
         </dependency>
+
+        <!--gRPC对ProtoBuf的支持工具包-->
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-protobuf</artifactId>
+            <version>1.46.0</version>
+        </dependency>
+
+        <!-- grpc底层通信组件 -->
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-netty</artifactId>
+            <version>1.46.0</version>
+        </dependency>
+
+        <!--gRPC处理从根的包-->
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-stub</artifactId>
+            <version>1.46.0</version>
+        </dependency>
     </dependencies>
 
     <build>
+        <extensions>
+            <extension>
+                <groupId>kr.motd.maven</groupId>
+                <artifactId>os-maven-plugin</artifactId>
+                <version>1.6.2</version>
+            </extension>
+        </extensions>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -62,6 +91,28 @@
                         </exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+
+            <!-- protobuf 编译组件 -->
+            <plugin>
+                <groupId>org.xolstice.maven.plugins</groupId>
+                <artifactId>protobuf-maven-plugin</artifactId>
+                <version>0.6.1</version>
+                <configuration>
+                    <protocArtifact>com.google.protobuf:protoc:3.17.0:exe:${os.detected.classifier}</protocArtifact>
+                    <pluginId>com.google.protobuf:protoc:3.17.0:exe:${os.detected.classifier}</pluginId>
+                    <protocArtifact>io.grpc:protoc-gen-grpc-java:1.42.0:exe:${os.detected.classifier}</protocArtifact>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <!--生成消息代码-->
+                            <goal>compile</goal>
+                            <!--生成gRPC的通信类文件-->
+                            <goal>compile-custom</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
