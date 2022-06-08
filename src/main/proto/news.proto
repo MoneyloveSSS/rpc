@@ -1,2 +1,30 @@
 // 使用proto3语法
 syntax = "proto3";
+// 是否生成多个类，否就将多个类变为内部类
+option java_multiple_files = false;
+//生成Java类的包
+option java_package = "com.example.rpc.grpc.proto";
+//生成java存根的类名
+option java_outer_classname = "NewsProto";
+//.proto类包名
+package news;
+
+// 定义RPC服务RouteGuide
+service NewsService {
+    //接口
+    rpc list(NewsRequest) returns (NewsResponse) { }
+}
+
+message NewsRequest {
+    string date = 1;
+}
+message NewsResponse {
+    //repeated表明为一个集合
+    repeated News news = 1;
+}
+message News {
+    int32 id = 1;
+    string title = 2;
+    string content = 3;
+    int64 createTime = 4;
+}
