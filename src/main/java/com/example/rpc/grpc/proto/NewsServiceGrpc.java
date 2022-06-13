@@ -1,6 +1,4 @@
-package com.example.rpc.proto;
-
-import com.example.rpc.grpc.proto.NewsProto;
+package com.example.rpc.grpc.proto;
 
 import static io.grpc.MethodDescriptor.generateFullMethodName;
 
